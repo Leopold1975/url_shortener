@@ -107,7 +107,6 @@ linters:
     - rowserrcheck
     - scopelint
     - sloglint
-    - spancheck
     - sqlclosecheck
     - staticcheck
     - structcheck
