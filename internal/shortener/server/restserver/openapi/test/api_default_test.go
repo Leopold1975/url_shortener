@@ -22,26 +22,11 @@ func Test_openapi_DefaultAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test DefaultAPIService ShortUrlDelete", func(t *testing.T) {
+	t.Run("Test DefaultAPIService UrlPost", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		var shortUrl string
-
-		httpRes, err := apiClient.DefaultAPI.ShortUrlDelete(context.Background(), shortUrl).Execute()
-
-		require.Nil(t, err)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test DefaultAPIService ShortUrlGet", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var shortUrl string
-
-		resp, httpRes, err := apiClient.DefaultAPI.ShortUrlGet(context.Background(), shortUrl).Execute()
+		resp, httpRes, err := apiClient.DefaultAPI.UrlPost(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -49,11 +34,26 @@ func Test_openapi_DefaultAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test DefaultAPIService UrlPost", func(t *testing.T) {
+	t.Run("Test DefaultAPIService UrlShortUrlDelete", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.DefaultAPI.UrlPost(context.Background()).Execute()
+		var shortUrl string
+
+		httpRes, err := apiClient.DefaultAPI.UrlShortUrlDelete(context.Background(), shortUrl).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService UrlShortUrlGet", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var shortUrl string
+
+		resp, httpRes, err := apiClient.DefaultAPI.UrlShortUrlGet(context.Background(), shortUrl).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
