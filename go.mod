@@ -3,7 +3,6 @@ module github.com/Leopold1975/url_shortener
 go 1.22.0
 
 require (
-	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/stretchr/testify v1.8.4
 	google.golang.org/grpc v1.62.0
 	google.golang.org/protobuf v1.32.0
