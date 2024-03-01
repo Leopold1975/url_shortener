@@ -1,0 +1,41 @@
+syntax="proto3";
+
+package shortener;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "./internal/shortener/server/grpcserver/pb";
+
+message URL {
+    string long_url = 1; // initial long URL
+    string short_url = 2; // unique short URL
+    google.protobuf.Timestamp created_at = 3;
+    int64 clicks = 4; // Num of clicks on this URL  
+}
+
+service URLShortener {
+    rpc GetShortURL(GetShortURLRequest) returns (GetShortURLResponse);
+    rpc GetURL(GetURLRequest)  returns (GetURLResponse);
+    rpc DeleteURL(DeleteURLRequest) returns (google.protobuf.Empty);
+}
+
+message GetShortURLRequest {
+    string long_url = 1;
+}
+
+message GetShortURLResponse {
+    string short_url = 1;
+}
+
+message GetURLRequest{
+    string short_url = 1;
+}
+
+message GetURLResponse{
+    URL url = 1;
+}
+
+message DeleteURLRequest {
+    string short_url = 1; 
+}

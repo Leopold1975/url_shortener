@@ -1,0 +1,103 @@
+openapi: 3.0.0
+info:
+  title: URLShortener API
+  version: "1.0"
+servers:
+  - url: http://localhost:7770/v1
+
+paths:
+  /url:
+    post:
+      summary: Create a short URL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - long_url
+              properties:
+                long_url:
+                  type: string
+      responses:
+        '201':
+          description: Successfully created short URL
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  short_url:
+                    type: string
+        '400':
+          description: Can not create short URL
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /url/{short_url}:
+    get:
+      summary: Redirect to long URL or get long URL info
+      parameters:
+        - in: path
+          name: short_url
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: info
+          required: false
+          schema:
+            type: boolean
+      responses:
+        '303':
+          description: Redirect to long URL
+          headers:
+            Location:
+              description: URL to redirect to
+              schema:
+                type: string
+                format: uri
+        '200':
+          description: JSON containing the long URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/URL'
+        '404':
+          description: Short URL not found
+
+    delete:
+      summary: Delete the short URL
+      parameters:
+        - in: path
+          name: short_url
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Short URL successfully deleted
+        '404':
+          description: Short URL not found  
+
+components:
+  schemas:
+    URL:
+      type: object
+      properties:
+        long_url:
+          type: string
+        short_url:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        clicks:
+          type: integer
+          format: int64
