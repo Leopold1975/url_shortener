@@ -20,9 +20,9 @@ var _ MappedNullable = &URL{}
 
 // URL struct for URL
 type URL struct {
-	LongUrl *string `json:"long_url,omitempty"`
-	ShortUrl *string `json:"short_url,omitempty"`
-	CreatedAt *time.Time `json:"created_at,omitempty"`
+	LongUrl *string `json:"longUrl,omitempty"`
+	ShortUrl *string `json:"shortUrl,omitempty"`
+	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	Clicks *int64 `json:"clicks,omitempty"`
 }
 
@@ -182,13 +182,13 @@ func (o URL) MarshalJSON() ([]byte, error) {
 func (o URL) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.LongUrl) {
-		toSerialize["long_url"] = o.LongUrl
+		toSerialize["longUrl"] = o.LongUrl
 	}
 	if !IsNil(o.ShortUrl) {
-		toSerialize["short_url"] = o.ShortUrl
+		toSerialize["shortUrl"] = o.ShortUrl
 	}
 	if !IsNil(o.CreatedAt) {
-		toSerialize["created_at"] = o.CreatedAt
+		toSerialize["createdAt"] = o.CreatedAt
 	}
 	if !IsNil(o.Clicks) {
 		toSerialize["clicks"] = o.Clicks

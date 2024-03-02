@@ -4,10 +4,70 @@ All URIs are relative to *http://localhost:7770/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**DocsGet**](DefaultAPI.md#DocsGet) | **Get** /docs | Shows docs
 [**UrlPost**](DefaultAPI.md#UrlPost) | **Post** /url | Create a short URL
 [**UrlShortUrlDelete**](DefaultAPI.md#UrlShortUrlDelete) | **Delete** /url/{short_url} | Delete the short URL
 [**UrlShortUrlGet**](DefaultAPI.md#UrlShortUrlGet) | **Get** /url/{short_url} | Redirect to long URL or get long URL info
 
+
+
+## DocsGet
+
+> string DocsGet(ctx).Execute()
+
+Shows docs
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Leopold1975/url_shortener/internal/shortener/server/restserver/openapi"
+)
+
+func main() {
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.DocsGet(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DocsGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DocsGet`: string
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.DocsGet`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDocsGetRequest struct via the builder pattern
+
+
+### Return type
+
+**string**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/html
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## UrlPost

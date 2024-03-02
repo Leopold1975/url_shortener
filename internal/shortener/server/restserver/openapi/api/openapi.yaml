@@ -5,6 +5,16 @@ info:
 servers:
 - url: http://localhost:7770/v1
 paths:
+  /docs:
+    get:
+      responses:
+        "200":
+          content:
+            text/html:
+              schema:
+                type: string
+          description: Successfully show api docs page
+      summary: Shows docs
   /url:
     post:
       requestBody:
@@ -83,16 +93,16 @@ components:
   schemas:
     URL:
       example:
-        created_at: 2000-01-23T04:56:07.000+00:00
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        shortUrl: shortUrl
         clicks: 0
-        long_url: long_url
-        short_url: short_url
+        longUrl: longUrl
       properties:
-        long_url:
+        longUrl:
           type: string
-        short_url:
+        shortUrl:
           type: string
-        created_at:
+        createdAt:
           format: date-time
           type: string
         clicks:

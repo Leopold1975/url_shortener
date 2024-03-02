@@ -77,6 +77,7 @@ All URIs are relative to *http://localhost:7770/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*DefaultAPI* | [**DocsGet**](docs/DefaultAPI.md#docsget) | **Get** /docs | Shows docs
 *DefaultAPI* | [**UrlPost**](docs/DefaultAPI.md#urlpost) | **Post** /url | Create a short URL
 *DefaultAPI* | [**UrlShortUrlDelete**](docs/DefaultAPI.md#urlshorturldelete) | **Delete** /url/{short_url} | Delete the short URL
 *DefaultAPI* | [**UrlShortUrlGet**](docs/DefaultAPI.md#urlshorturlget) | **Get** /url/{short_url} | Redirect to long URL or get long URL info
