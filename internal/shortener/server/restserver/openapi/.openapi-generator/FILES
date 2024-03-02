@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 .travis.yml
 README.md
 api/openapi.yaml
@@ -17,5 +16,4 @@ model__url_post_400_response.go
 model__url_post_request.go
 model_url.go
 response.go
-test/api_default_test.go
 utils.go
