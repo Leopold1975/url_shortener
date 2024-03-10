@@ -6,6 +6,16 @@ servers:
   - url: http://localhost:7770/v1
 
 paths:
+  /docs:
+    get:
+      summary: Shows docs
+      responses:
+        '200':
+          description: Successfully show api docs page
+          content:
+            text/html:
+              schema:
+                type: string
   /url:
     post:
       summary: Create a short URL
@@ -91,11 +101,11 @@ components:
     URL:
       type: object
       properties:
-        long_url:
+        longUrl:
           type: string
-        short_url:
+        shortUrl:
           type: string
-        created_at:
+        createdAt:
           type: string
           format: date-time
         clicks:
