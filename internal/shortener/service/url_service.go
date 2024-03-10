@@ -38,48 +38,58 @@ func (s ShortenerService) CreateShortURL(ctx context.Context, longURL string) (s
 		return "", ErrInvalidURL
 	}
 
-	u, err := urls.PrepareURL(longURL)
+	url, err := urls.PrepareURL(longURL)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("create url repo error: %w", err)
 	}
 
-	if _, err := s.cache.CreateURL(ctx, u); err != nil {
+	if _, err := s.cache.CreateURL(ctx, url); err != nil {
 		s.lg.Error("create URL cache error: %s", err.Error())
 	}
 
-	return s.str.CreateURL(ctx, u)
+	su, err := s.str.CreateURL(ctx, url)
+
+	return su, fmt.Errorf("create url repo error: %w", err)
 }
 
 func (s ShortenerService) GetURL(ctx context.Context, shortURL string) (urls.URL, error) {
-	u, err := s.cache.GetURL(ctx, shortURL)
+	url, err := s.cache.GetURL(ctx, shortURL)
+
 	switch {
 	case err == nil:
-		return u, nil
+		return url, nil
 	case errors.Is(err, repository.ErrNotFound):
 		s.lg.Info("cache missed")
-		if _, err := s.cache.UpdateURL(ctx, u); err != nil {
+
+		if _, err := s.cache.UpdateURL(ctx, url); err != nil {
 			s.lg.Error("update URL cache error: %s", err.Error())
 		}
 	default:
 		s.lg.Error("get URL cache error: ", err.Error())
 	}
 
-	u, err = s.str.GetURL(ctx, shortURL)
+	url, err = s.str.GetURL(ctx, shortURL)
 
-	return u, err
+	return url, fmt.Errorf("get url repo error: %w", err)
 }
 
 func (s ShortenerService) GetURLWithInc(ctx context.Context, shortURL string) (urls.URL, error) {
-	u, err := s.GetURL(ctx, shortURL)
+	url, err := s.GetURL(ctx, shortURL)
 	if err != nil {
 		return urls.URL{}, err
 	}
 
-	u.Clicks++
-	if _, err := s.cache.UpdateURL(ctx, u); err != nil {
+	url.Clicks++
+	if _, err := s.cache.UpdateURL(ctx, url); err != nil {
 		s.lg.Error("update URL cache error: %s", err.Error())
 	}
-	return s.str.UpdateURL(ctx, u)
+
+	url, err = s.str.UpdateURL(ctx, url)
+	if err != nil {
+		return urls.URL{}, fmt.Errorf("update url repo error: %w", err)
+	}
+
+	return url, nil
 }
 
 func (s ShortenerService) DeleteURL(ctx context.Context, shortURL string) error {
@@ -91,9 +101,10 @@ func (s ShortenerService) DeleteURL(ctx context.Context, shortURL string) error 
 	case err != nil && err2 != nil:
 		return fmt.Errorf("cache error: %w    repo error: %w", err, err2)
 	case err2 != nil:
-		return err2
+		return fmt.Errorf("delete url repo error: %w", err2)
 	case err != nil:
 		s.lg.Error("get cache error: ", err.Error())
+
 		return nil
 	default:
 		return nil

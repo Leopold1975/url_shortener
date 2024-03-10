@@ -13,20 +13,25 @@ type FakeRepo struct {
 }
 
 func NewFakeRepo() FakeRepo {
+	defaultLen := 100
+
 	return FakeRepo{
-		r: make(map[string]urls.URL, 100),
+		r:  make(map[string]urls.URL, defaultLen),
+		mu: sync.RWMutex{},
 	}
 }
-func (f *FakeRepo) CreateURL(_ context.Context, u urls.URL) (string, error) {
+
+func (f *FakeRepo) CreateURL(_ context.Context, url urls.URL) (string, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 
-	if _, ok := f.r[u.ShortURL]; ok {
+	if _, ok := f.r[url.ShortURL]; ok {
 		return "", ErrAleradyExists
 	}
-	f.r[u.ShortURL] = u
 
-	return u.ShortURL, nil
+	f.r[url.ShortURL] = url
+
+	return url.ShortURL, nil
 }
 
 func (f *FakeRepo) GetURL(_ context.Context, shortURL string) (urls.URL, error) {
@@ -50,18 +55,19 @@ func (f *FakeRepo) DeleteURL(_ context.Context, shortURL string) error {
 	}
 
 	delete(f.r, shortURL)
+
 	return nil
 }
 
-func (f *FakeRepo) UpdateURL(_ context.Context, u urls.URL) (urls.URL, error) {
+func (f *FakeRepo) UpdateURL(_ context.Context, url urls.URL) (urls.URL, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 
-	if _, ok := f.r[u.ShortURL]; !ok {
+	if _, ok := f.r[url.ShortURL]; !ok {
 		return urls.URL{}, ErrNotFound
 	}
 
-	f.r[u.ShortURL] = u
+	f.r[url.ShortURL] = url
 
-	return u, nil
+	return url, nil
 }

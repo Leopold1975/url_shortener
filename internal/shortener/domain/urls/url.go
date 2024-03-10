@@ -1,7 +1,7 @@
 package urls
 
 import (
-	"crypto/md5"
+	"crypto/md5" //nolint:gosec
 	"encoding/hex"
 	"net/url"
 	"strconv"
@@ -21,16 +21,14 @@ type URL struct {
 func PrepareURL(longURL string) (URL, error) {
 	uid := uuid.New()
 
-	short, err := getShort(longURL)
-	if err != nil {
-		return URL{}, err
-	}
+	short := getShort(longURL)
 
 	return URL{
 		UUID:      uid.String(),
 		LongURL:   longURL,
 		ShortURL:  short,
 		CreatedAt: time.Now(),
+		Clicks:    0,
 	}, nil
 }
 
@@ -40,16 +38,15 @@ func Validate(longURL string) bool {
 	return err == nil
 }
 
-func getShort(longURL string) (string, error) {
+func getShort(longURL string) string {
 	// This was really inefficient way. Short URL took more symbols, than original one
 	// zw := zlib.NewWriter(&buf)
 	// short := base64.RawURLEncoding.EncodeToString(buf.Bytes())
-
-	h := md5.Sum([]byte(longURL + strconv.Itoa(int(time.Now().Unix()))))
+	h := md5.Sum([]byte(longURL + strconv.Itoa(int(time.Now().Unix())))) //nolint:gosec
 
 	short := hex.EncodeToString(h[:6])
 
-	return short, nil
+	return short
 }
 
 // The Previous version.
