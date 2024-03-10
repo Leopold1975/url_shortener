@@ -48,8 +48,11 @@ func (s ShortenerService) CreateShortURL(ctx context.Context, longURL string) (s
 	}
 
 	su, err := s.str.CreateURL(ctx, url)
+	if err != nil {
+		return "", fmt.Errorf("create url repo error: %w", err)
+	}
 
-	return su, fmt.Errorf("create url repo error: %w", err)
+	return su, nil
 }
 
 func (s ShortenerService) GetURL(ctx context.Context, shortURL string) (urls.URL, error) {
@@ -70,7 +73,11 @@ func (s ShortenerService) GetURL(ctx context.Context, shortURL string) (urls.URL
 
 	url, err = s.str.GetURL(ctx, shortURL)
 
-	return url, fmt.Errorf("get url repo error: %w", err)
+	if err != nil {
+		return urls.URL{}, fmt.Errorf("get url repo error: %w", err)
+	}
+
+	return url, nil
 }
 
 func (s ShortenerService) GetURLWithInc(ctx context.Context, shortURL string) (urls.URL, error) {
