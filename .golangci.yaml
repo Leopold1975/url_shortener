@@ -24,7 +24,6 @@ linters-settings:
 linters:
   disable-all: true
   enable:
-    - asasalint
     - asciicheck
     - bidichk
     - bodyclose
@@ -121,7 +120,6 @@ linters:
     - unparam
     - unused
     - usestdlibvars
-    - varnamelen
     - wastedassign
     - whitespace
     - wrapcheck
@@ -138,7 +136,6 @@ linters:
     - module
     - performance
     - sql
-    - style
     - test
     - unused
 
