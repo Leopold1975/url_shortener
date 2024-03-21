@@ -41,7 +41,7 @@ func (s *ShortenerRepoTestSuite) SetupSuite() {
 		Version:  1,
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*20)
 	defer cancel()
 
 	repo, err := postgres.NewPostgresRepo(ctx, cfg)
