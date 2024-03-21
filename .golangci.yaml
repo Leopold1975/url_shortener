@@ -24,7 +24,6 @@ linters-settings:
 linters:
   disable-all: true
   enable:
-    - asasalint
     - asciicheck
     - bidichk
     - bodyclose
@@ -137,7 +136,6 @@ linters:
     - module
     - performance
     - sql
-    - style
     - test
     - unused
 

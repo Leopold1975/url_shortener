@@ -5,6 +5,7 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/Leopold1975/url_shortener/internal/pkg/config"
 	"github.com/Leopold1975/url_shortener/internal/shortener/domain/urls"
 	"github.com/Leopold1975/url_shortener/internal/shortener/repository"
 	"github.com/Leopold1975/url_shortener/internal/shortener/service"
@@ -18,7 +19,8 @@ var testURL = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 func TestBasicWithCache(t *testing.T) {
 	r1 := repository.NewFakeRepo()
 	r2 := repository.NewFakeRepo()
-	l := logger.New()
+	l, err := logger.New(config.Logger{Level: "info"})
+	assert.NoError(t, err, "expected %v		actual: %v", nil, err)
 	ctx := context.Background()
 
 	s := service.New(&r1, &r2, l)
@@ -60,7 +62,8 @@ func TestBasicWithoutCache(t *testing.T) {
 	m := repository.NewMockRepository(ctrl)
 
 	r1 := repository.NewFakeRepo()
-	l := logger.New()
+	l, err := logger.New(config.Logger{Level: "info"})
+	assert.NoError(t, err, "expected %v		actual: %v", nil, err)
 	ctx := context.Background()
 	mockErr := errors.New("mock err")
 
