@@ -22,9 +22,9 @@ type RESTServer struct {
 
 type DB struct {
 	Addr     string `yaml:"addr"`
-	Username string `yaml:"username" env:"POSTGRES_USER" env-required:"true"`
-	Password string `yaml:"password" env:"POSTGRES_PASSWORD"`
-	DB       string `yaml:"db"  env:"POSTGRES_DB" env-required:"true"`
+	Username string `env:"POSTGRES_USER"     env-required:"true" yaml:"username"`
+	Password string `env:"POSTGRES_PASSWORD" yaml:"password"`
+	DB       string `env:"POSTGRES_DB"       env-required:"true" yaml:"db"`
 	SSLmode  string `yaml:"sslmode"`
 	MaxConns string `yaml:"maxConns"`
 	Reload   bool   `yaml:"reload"`
