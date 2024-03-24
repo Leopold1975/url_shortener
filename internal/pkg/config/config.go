@@ -32,9 +32,10 @@ type DB struct {
 }
 
 type RedisDB struct {
-	Addr     string `yaml:"addr"`
-	Password string `yaml:"password"`
-	DB       int    `yaml:"db"`
+	Addr     string        `yaml:"addr"`
+	Password string        `yaml:"password"`
+	DB       int           `yaml:"db"`
+	ExpTime  time.Duration `yaml:"exp"`
 }
 
 type Logger struct {
