@@ -14,18 +14,22 @@ linters-settings:
     lines: 100
     statements: 50
     ignore-comments: true
+  depguard:
+    rules:
+      main:
+          allow:
+            - $gostd
+            - github.com/
   
 linters:
   disable-all: true
   enable:
-    - asasalint
     - asciicheck
     - bidichk
     - bodyclose
     - containedctx
     - contextcheck
     - cyclop
-    - deadcode
     - decorder
     - depguard
     - dogsled
@@ -38,7 +42,6 @@ linters:
     - errorlint
     - execinquery
     - exhaustive
-    - exhaustivestruct
     - exhaustruct
     - exportloopref
     - forbidigo
@@ -61,7 +64,6 @@ linters:
     - gofumpt
     - goheader
     - goimports
-    - golint
     - gomnd
     - gomoddirectives
     - gomodguard
@@ -71,18 +73,15 @@ linters:
     - gosmopolitan
     - govet
     - grouper
-    - ifshort
     - importas
     - inamedparam
     - ineffassign
     - interfacebloat
-    - interfacer
     - ireturn
     - lll
     - loggercheck
     - maintidx
     - makezero
-    - maligned
     - mirror
     - misspell
     - musttag
@@ -94,7 +93,6 @@ linters:
     - noctx
     - nolintlint
     - nonamedreturns
-    - nosnakecase
     - nosprintfhostport
     - paralleltest
     - perfsprint
@@ -105,11 +103,9 @@ linters:
     - reassign
     - revive
     - rowserrcheck
-    - scopelint
     - sloglint
     - sqlclosecheck
     - staticcheck
-    - structcheck
     - stylecheck
     - tagalign
     - tagliatelle
@@ -124,8 +120,6 @@ linters:
     - unparam
     - unused
     - usestdlibvars
-    - varcheck
-    - varnamelen
     - wastedassign
     - whitespace
     - wrapcheck
@@ -142,7 +136,6 @@ linters:
     - module
     - performance
     - sql
-    - style
     - test
     - unused
 
